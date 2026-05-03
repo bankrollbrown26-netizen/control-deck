@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="velvet-noir" data-motion="slow-luxury">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nova Vellichor — Calling Card</title>
+<meta name="description" content="After-hours sound director. Vinyl & velvet." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Syne:wght@500..800&family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Bowlby+One&family=Caudex&family=UnifrakturMaguntia&family=Manrope:wght@200..800&family=JetBrains+Mono:wght@300..700&family=Inter+Tight:wght@200..700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================
+   CALLING CARD — public profile
+   ==========================================================
+   Design language:
+   - Editorial luxury, motion-first, theme-driven
+   - All theme tokens live in CSS variables — JS swaps the
+     [data-theme] attribute on <html> and the look re-skins
+   - Motion personality lives on [data-motion] on <html>
+   ========================================================== */
+
+/* -----------------------------------------------------------
+   THEME TOKENS — one block per theme.
+   ----------------------------------------------------------- */
+:root[data-theme="velvet-noir"] {
+  --bg: #0B0608;
+  --bg-2: #160A0D;
+  --surface: rgba(22, 10, 13, 0.7);
+  --ink: #F4E9D8;
+  --ink-soft: #C9BBA4;
+  --muted: #8E7A65;
+  --accent: #C7A66B;
+  --accent-soft: #5A2A2F;
+  --hair: rgba(199,166,107,0.18);
+
+  --font-display: 'Fraunces', serif;
+  --font-display-italic: 1;
+  --font-body: 'Manrope', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --display-tracking: -0.025em;
+  --display-weight: 400;
+  --display-uppercase: none;
+
+  --card-radius: 18px;
+  --card-shadow: 0 30px 80px -30px rgba(0,0,0,0.85);
+  --card-surface: linear-gradient(180deg, #160A0D 0%, #0B0608 100%);
+
+  --btn-shape: 999px;
+  --btn-fill: transparent;
+  --btn-fill-hover: var(--accent);
+  --btn-ink-hover: #0B0608;
+
+  --vignette: 0.65;
+  --noise-opacity: 0.06;
+  --grid-opacity: 0;
+  --shimmer-opacity: 0;
+  --ambient-color: rgba(199,166,107,0.05);
+}
+
+:root[data-theme="champagne-muse"] {
+  --bg: #F6EFE3;
+  --bg-2: #FFFAF1;
+  --surface: rgba(255, 250, 241, 0.8);
+  --ink: #2A1F12;
+  --ink-soft: #5C4A35;
+  --muted: #8C7A60;
+  --accent: #B98A3D;
+  --accent-soft: #E7D2A4;
+  --hair: rgba(42,31,18,0.10);
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-display-italic: 0;
+  --font-body: 'Manrope', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --display-tracking: -0.015em;
+  --display-weight: 500;
+  --display-uppercase: none;
+
+  --card-radius: 12px;
+  --card-shadow: 0 24px 60px -28px rgba(80,60,30,0.25);
+  --card-surface: #FFFAF1;
+
+  --btn-shape: 4px;
+  --btn-fill: var(--ink);
+  --btn-fill-hover: var(--accent);
+  --btn-ink-hover: #FFFAF1;
+
+  --vignette: 0.12;
+  --noise-opacity: 0.04;
+  --grid-opacity: 0;
+  --shimmer-opacity: 0;
+  --ambient-color: rgba(185,138,61,0.04);
+}
+
+:root[data-theme="neon-siren"] {
+  --bg: #05030A;
+  --bg-2: #0E0820;
+  --surface: rgba(14, 8, 32, 0.7);
+  --ink: #FFFFFF;
+  --ink-soft: #D8D4F0;
+  --muted: #8B85A8;
+  --accent: #FF2BD6;
+  --accent-soft: #1FE8E8;
+  --hair: rgba(255,43,214,0.25);
+
+  --font-display: 'Syne', sans-serif;
+  --font-display-italic: 0;
+  --font-body: 'Manrope', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --display-tracking: -0.04em;
+  --display-weight: 800;
+  --display-uppercase: none;
+
+  --card-radius: 6px;
+  --card-shadow: 0 0 60px -10px rgba(255,43,214,0.45), 0 0 120px -40px rgba(31,232,232,0.4);
+  --card-surface: linear-gradient(135deg, #0E0820 0%, #05030A 100%);
+
+  --btn-shape: 4px;
+  --btn-fill: var(--accent);
+  --btn-fill-hover: var(--accent-soft);
+  --btn-ink-hover: #05030A;
+
+  --vignette: 0.3;
+  --noise-opacity: 0.03;
+  --grid-opacity: 0.06;
+  --shimmer-opacity: 0;
+  --ambient-color: rgba(255,43,214,0.08);
+}
+
+:root[data-theme="ice-queen"] {
+  --bg: #EFF4F8;
+  --bg-2: #F8FAFD;
+  --surface: rgba(255,255,255,0.55);
+  --ink: #0F1A26;
+  --ink-soft: #2E4358;
+  --muted: #6E8294;
+  --accent: #5AA9D6;
+  --accent-soft: #C6DDEC;
+  --hair: rgba(15,26,38,0.10);
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-display-italic: 0;
+  --font-body: 'Inter Tight', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --display-tracking: 0.005em;
+  --display-weight: 300;
+  --display-uppercase: none;
+
+  --card-radius: 20px;
+  --card-shadow: 0 24px 60px -30px rgba(15,26,38,0.18);
+  --card-surface: rgba(255,255,255,0.55);
+
+  --btn-shape: 999px;
+  --btn-fill: rgba(255,255,255,0.6);
+  --btn-fill-hover: var(--ink);
+  --btn-ink-hover: #FFFFFF;
+
+  --vignette: 0.05;
+  --noise-opacity: 0.02;
+  --grid-opacity: 0;
+  --shimmer-opacity: 0.5;
+  --ambient-color: rgba(90,169,214,0.05);
+}
+
+:root[data-theme="dark-rose"] {
+  --bg: #120A0E;
+  --bg-2: #1F1218;
+  --surface: rgba(31, 18, 24, 0.7);
+  --ink: #F2DFE3;
+  --ink-soft: #D4B7BE;
+  --muted: #9A7580;
+  --accent: #C97B8A;
+  --accent-soft: #3E1A23;
+  --hair: rgba(201,123,138,0.22);
+
+  --font-display: 'Playfair Display', serif;
+  --font-display-italic: 1;
+  --font-body: 'Manrope', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --display-tracking: -0.015em;
+  --display-weight: 500;
+  --display-uppercase: none;
+
+  --card-radius: 14px;
+  --card-shadow: 0 30px 70px -30px rgba(0,0,0,0.7);
+  --card-surface: linear-gradient(180deg, #1F1218 0%, #120A0E 100%);
+
+  --btn-shape: 4px;
+  --btn-fill: transparent;
+  --btn-fill-hover: var(--accent);
+  --btn-ink-hover: #120A0E;
+
+  --vignette: 0.55;
+  --noise-opacity: 0.06;
+  --grid-opacity: 0;
+  --shimmer-opacity: 0;
+  --ambient-color: rgba(201,123,138,0.05);
+}
+
+:root[data-theme="goth-luxe"] {
+  --bg: #070506;
+  --bg-2: #120D0F;
+  --surface: rgba(18, 13, 15, 0.7);
+  --ink: #EDE3DA;
+  --ink-soft: #B8A89B;
+  --muted: #8A7C75;
+  --accent: #9A1B2A;
+  --accent-soft: #3A1116;
+  --hair: rgba(154,27,42,0.32);
+
+  --font-display: 'UnifrakturMaguntia', 'Cormorant Garamond', serif;
+  --font-display-italic: 0;
+  --font-body: 'Cormorant Garamond', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --display-tracking: 0.01em;
+  --display-weight: 400;
+  --display-uppercase: none;
+
+  --card-radius: 4px;
+  --card-shadow: 0 30px 80px -30px rgba(0,0,0,0.9), inset 0 0 80px -20px rgba(154,27,42,0.18);
+  --card-surface: linear-gradient(180deg, #120D0F 0%, #070506 100%);
+
+  --btn-shape: 0px;
+  --btn-fill: transparent;
+  --btn-fill-hover: var(--accent);
+  --btn-ink-hover: #EDE3DA;
+
+  --vignette: 0.78;
+  --noise-opacity: 0.07;
+  --grid-opacity: 0;
+  --shimmer-opacity: 0;
+  --ambient-color: rgba(154,27,42,0.07);
+}
+
+:root[data-theme="pop-star"] {
+  --bg: #0F0322;
+  --bg-2: #1B0840;
+  --surface: rgba(27, 8, 64, 0.7);
+  --ink: #FFFFFF;
+  --ink-soft: #E0D6FA;
+  --muted: #B0A0D8;
+  --accent: #9B5CFF;
+  --accent-soft: #C9F94F;
+  --hair: rgba(201,249,79,0.35);
+
+  --font-display: 'Bowlby One', sans-serif;
+  --font-display-italic: 0;
+  --font-body: 'Manrope', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --display-tracking: -0.02em;
+  --display-weight: 400;
+  --display-uppercase: none;
+
+  --card-radius: 28px;
+  --card-shadow: 0 24px 60px -20px rgba(155,92,255,0.5);
+  --card-surface: linear-gradient(135deg, #1B0840 0%, #0F0322 100%);
+
+  --btn-shape: 999px;
+  --btn-fill: var(--accent);
+  --btn-fill-hover: var(--accent-soft);
+  --btn-ink-hover: #0F0322;
+
+  --vignette: 0.2;
+  --noise-opacity: 0.04;
+  --grid-opacity: 0;
+  --shimmer-opacity: 0;
+  --ambient-color: rgba(155,92,255,0.08);
+}
+
+/* -----------------------------------------------------------
+   GLOBAL RESET + BASE
+   ----------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+/* Display type helper */
+.display {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-style: italic;
+  letter-spacing: var(--display-tracking);
+  text-transform: var(--display-uppercase);
+  font-style: italic;
+  line-height: 0.95;
+}
+:root[data-theme="velvet-noir"] .display,
+:root[data-theme="dark-rose"] .display { font-style: italic; }
+:root[data-theme="champagne-muse"] .display,
+:root[data-theme="neon-siren"] .display,
+:root[data-theme="ice-queen"] .display,
+:root[data-theme="goth-luxe"] .display,
+:root[data-theme="pop-star"] .display { font-style: normal; }
+
+.mono { font-family: var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+
+.shell { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+@media (max-width: 720px) { .shell { padding: 0 20px; } }
+
+/* -----------------------------------------------------------
+   AMBIENT BACKGROUND LAYERS — render once, theme-swap via vars
+   ----------------------------------------------------------- */
+.ambient {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.ambient::before {
+  /* radial vignette */
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(120% 80% at 50% 30%, transparent 0%, transparent 40%, rgba(0,0,0, calc(var(--vignette) * 1)) 100%);
+  transition: opacity 0.6s ease;
+}
+.ambient::after {
+  /* fine noise via SVG turbulence */
+  content: "";
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: var(--noise-opacity);
+  mix-blend-mode: overlay;
+}
+.ambient .grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, var(--accent) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--accent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: var(--grid-opacity);
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+.ambient .shimmer {
+  position: absolute; inset: -50%;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.5) 50%, transparent 70%);
+  opacity: var(--shimmer-opacity);
+  filter: blur(40px);
+  animation: shimmer-pass 8s linear infinite;
+}
+@keyframes shimmer-pass {
+  0%   { transform: translateX(-30%) translateY(-10%); }
+  100% { transform: translateX(30%) translateY(10%); }
+}
+.ambient .glow {
+  position: absolute;
+  width: 60vw; height: 60vw;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, var(--ambient-color) 0%, transparent 60%);
+  filter: blur(40px);
+}
+.ambient .glow.a { top: -20vw; left: -10vw; animation: drift-a 18s ease-in-out infinite alternate; }
+.ambient .glow.b { bottom: -25vw; right: -15vw; animation: drift-b 22s ease-in-out infinite alternate; }
+@keyframes drift-a { from { transform: translate(0,0); } to { transform: translate(80px, 60px); } }
+@keyframes drift-b { from { transform: translate(0,0); } to { transform: translate(-100px, -80px); } }
+
+/* Theme-specific ambient pulses */
+:root[data-theme="neon-siren"] .ambient .grid { animation: scanline 6s linear infinite; }
+@keyframes scanline { from { background-position: 0 0; } to { background-position: 0 48px; } }
+
+:root[data-theme="goth-luxe"] .ambient .glow { animation-name: candle-flicker; animation-duration: 4s; animation-timing-function: cubic-bezier(.4,.0,.2,1); }
+@keyframes candle-flicker {
+  0%,100% { opacity: 1; transform: scale(1); }
+  10% { opacity: 0.8; }
+  20% { opacity: 1; }
+  35% { opacity: 0.6; transform: scale(0.97); }
+  40% { opacity: 1; transform: scale(1); }
+  60% { opacity: 0.85; }
+  72% { opacity: 1; }
+}
+
+/* -----------------------------------------------------------
+   THEME SWITCHER — top-right floating chip
+   ----------------------------------------------------------- */
+.deck {
+  position: fixed; top: 18px; right: 18px;
+  z-index: 60;
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 8px 8px 14px;
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  box-shadow: 0 12px 30px -10px rgba(0,0,0,0.4);
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+.deck .label { padding-right: 4px; opacity: 0.7; }
+.deck .pill {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font: inherit; color: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.deck .pill:hover { color: var(--ink); }
+.deck .pill[aria-current="true"] {
+  background: var(--accent);
+  color: var(--btn-ink-hover);
+  border-color: var(--accent);
+}
+@media (max-width: 920px) {
+  .deck { top: 12px; right: 12px; padding: 6px; gap: 6px; }
+  .deck .label { display: none; }
+  .deck .pill { padding: 5px 9px; font-size: 10px; }
+}
+
+/* -----------------------------------------------------------
+   ENTRANCE ANIMATIONS — driven by IntersectionObserver
+   ----------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 900ms cubic-bezier(0.22, 0.68, 0.26, 1) var(--d, 0ms),
+    transform 900ms cubic-bezier(0.22, 0.68, 0.26, 1) var(--d, 0ms),
+    filter 900ms cubic-bezier(0.22, 0.68, 0.26, 1) var(--d, 0ms);
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* Motion personalities — modulate the reveal */
+:root[data-motion="pulse-glow"] .reveal {
+  transform: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 500ms cubic-bezier(0.4,0,0.2,1) var(--d,0ms),
+              opacity 500ms ease var(--d,0ms);
+}
+:root[data-motion="pulse-glow"] .reveal.in { clip-path: inset(0 0 0 0); }
+
+:root[data-motion="floaty-editorial"] .reveal {
+  transform: translateY(16px) scale(0.985);
+  transition: opacity 700ms cubic-bezier(0.16,1,0.3,1) var(--d,0ms),
+              transform 700ms cubic-bezier(0.16,1,0.3,1) var(--d,0ms);
+}
+:root[data-motion="floaty-editorial"] .reveal.in { transform: none; }
+
+:root[data-motion="glass-shimmer"] .reveal {
+  filter: blur(12px);
+  transform: translateY(14px);
+  transition: opacity 800ms cubic-bezier(0.16,1,0.3,1) var(--d,0ms),
+              transform 800ms cubic-bezier(0.16,1,0.3,1) var(--d,0ms),
+              filter 800ms cubic-bezier(0.16,1,0.3,1) var(--d,0ms);
+}
+:root[data-motion="glass-shimmer"] .reveal.in { filter: blur(0); transform: none; }
+
+:root[data-motion="petal-fall"] .reveal {
+  transform: translateY(-30px) rotate(-1.5deg);
+  transition: opacity 800ms cubic-bezier(0.22,0.68,0.26,1) var(--d,0ms),
+              transform 800ms cubic-bezier(0.22,0.68,0.26,1) var(--d,0ms);
+}
+:root[data-motion="petal-fall"] .reveal.in { transform: none; }
+
+:root[data-motion="bouncy-spring"] .reveal {
+  transform: translateY(20px) scale(0.94);
+  transition: opacity 500ms ease var(--d,0ms),
+              transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) var(--d,0ms);
+}
+:root[data-motion="bouncy-spring"] .reveal.in { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transform: none !important; filter: none !important; clip-path: none !important; transition: opacity 300ms ease !important; }
+  .ambient .glow, .ambient .shimmer { animation: none !important; }
+}
+
+/* -----------------------------------------------------------
+   PAGE LAYOUT
+   ----------------------------------------------------------- */
+main { position: relative; z-index: 1; }
+section { padding: 96px 0; position: relative; }
+@media (max-width: 720px) { section { padding: 72px 0; } }
+
+.section-rule {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--hair) 20%, var(--hair) 80%, transparent);
+  margin: 0 32px;
+}
+
+/* -----------------------------------------------------------
+   HERO
+   ----------------------------------------------------------- */
+.hero {
+  min-height: 100vh;
+  padding-top: 14vh;
+  padding-bottom: 6vh;
+  display: flex;
+  align-items: center;
+}
+.hero .grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 48px;
+  align-items: center;
+  width: 100%;
+}
+@media (max-width: 920px) {
+  .hero .grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+.hero .meta {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 28px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hero .meta .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 18px var(--accent);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+.hero h1.name {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: clamp(56px, 11vw, 168px);
+  line-height: 0.92;
+  margin: 0;
+  color: var(--ink);
+}
+:root[data-theme="velvet-noir"] .hero h1.name,
+:root[data-theme="dark-rose"] .hero h1.name { font-style: italic; }
+:root[data-theme="runway-angel"] .hero h1.name { text-transform: uppercase; }
+
+.hero h1.name .accent { color: var(--accent); }
+.hero h1.name .softer { color: var(--ink-soft); }
+
+.hero .tagline {
+  margin-top: 28px;
+  max-width: 32ch;
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.hero .pillrow {
+  margin-top: 36px;
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+.hero .pillrow .pill {
+  padding: 7px 14px;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: var(--surface);
+  backdrop-filter: blur(8px);
+}
+
+.hero-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--hair);
+  background: var(--card-surface);
+}
+.hero-card .figure {
+  position: absolute; inset: 0;
+  display: grid; place-items: end center;
+}
+.hero-card .figure svg {
+  width: 100%; height: 100%;
+  animation: kenburns 18s ease-in-out infinite alternate;
+  transform-origin: 50% 65%;
+}
+@keyframes kenburns {
+  from { transform: scale(1.02) translateY(0); }
+  to   { transform: scale(1.12) translateY(-2%); }
+}
+.hero-card .badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+.hero-card .corner {
+  position: absolute;
+  bottom: 14px; right: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(0,0,0,0.45);
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+/* -----------------------------------------------------------
+   VIBE
+   ----------------------------------------------------------- */
+.vibe {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (max-width: 720px) { .vibe { grid-template-columns: 1fr; gap: 28px; } }
+
+.vibe .signature {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: clamp(34px, 5vw, 64px);
+  line-height: 1.05;
+  margin: 0;
+  color: var(--ink);
+}
+:root[data-theme="velvet-noir"] .vibe .signature,
+:root[data-theme="dark-rose"] .vibe .signature { font-style: italic; }
+
+.vibe .palette {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.vibe .swatch {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--hair);
+  position: relative;
+  overflow: hidden;
+}
+.vibe .swatch::after {
+  content: attr(data-label);
+  position: absolute; left: 12px; bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  mix-blend-mode: difference;
+}
+
+/* -----------------------------------------------------------
+   STATS
+   ----------------------------------------------------------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+@media (max-width: 920px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .stats { grid-template-columns: 1fr; } }
+
+.stat {
+  background: var(--card-surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--card-radius);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.stat .num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--display-weight);
+  font-size: clamp(48px, 6vw, 76px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  display: block;
+}
+:root[data-theme="champagne-muse"] .stat .num,
+:root[data-theme="ice-queen"] .stat .num,
+:root[data-theme="goth-luxe"] .stat .num,
+:root[data-theme="neon-siren"] .stat .num,
+:root[data-theme="pop-star"] .stat .num { font-style: normal; }
+
+.stat .lbl {
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.stat .ix {
+  position: absolute; top: 12px; right: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+/* -----------------------------------------------------------
+   GALLERY
+   ----------------------------------------------------------- */
+.section-head {
+  display: flex; align-items: end; justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+.section-head .title {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: clamp(32px, 4.4vw, 56px);
+  line-height: 1;
+  margin: 0;
+}
+:root[data-theme="velvet-noir"] .section-head .title,
+:root[data-theme="dark-rose"] .section-head .title { font-style: italic; }
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+}
+.gtile {
+  position: relative;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  border: 1px solid var(--hair);
+  background: var(--card-surface);
+}
+.gtile .art { position: absolute; inset: 0; }
+.gtile .cap {
+  position: absolute;
+  left: 12px; bottom: 10px; right: 12px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.005em;
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.55);
+}
+:root[data-theme="champagne-muse"] .gtile .cap,
+:root[data-theme="golden-hour"] .gtile .cap { color: rgba(20,15,10,0.92); text-shadow: 0 1px 6px rgba(255,255,255,0.4); font-style: normal; font-variant: small-caps; letter-spacing: 0.06em; }
+:root[data-theme="neon-siren"] .gtile .cap { font-family: var(--font-mono); font-style: normal; text-transform: uppercase; font-size: 10px; letter-spacing: 0.18em; }
+:root[data-theme="runway-angel"] .gtile .cap { font-family: var(--font-mono); font-style: normal; text-transform: uppercase; font-size: 10px; letter-spacing: 0.22em; color: rgba(255,255,255,0.95); }
+
+/* Gallery grid layout: 6 tiles in editorial bento */
+.gtile.t1 { grid-column: span 5; aspect-ratio: 4 / 5; }
+.gtile.t2 { grid-column: span 7; aspect-ratio: 16 / 11; }
+.gtile.t3 { grid-column: span 4; aspect-ratio: 1 / 1; }
+.gtile.t4 { grid-column: span 4; aspect-ratio: 1 / 1; }
+.gtile.t5 { grid-column: span 4; aspect-ratio: 1 / 1; }
+.gtile.t6 { grid-column: span 12; aspect-ratio: 21 / 9; }
+@media (max-width: 720px) {
+  .gtile.t1, .gtile.t2, .gtile.t3, .gtile.t4, .gtile.t5, .gtile.t6 {
+    grid-column: span 12; aspect-ratio: 4/5;
+  }
+}
+
+.gtile .vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(120% 80% at 50% 30%, transparent 30%, rgba(0,0,0,0.55) 100%);
+  pointer-events: none;
+}
+
+/* -----------------------------------------------------------
+   FEATURED NIGHTS
+   ----------------------------------------------------------- */
+.nights {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 920px) {
+  .nights { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; padding-bottom: 8px; margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+  .nights .night { flex: 0 0 80%; scroll-snap-align: start; }
+}
+.night {
+  position: relative;
+  background: var(--card-surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.night .img {
+  aspect-ratio: 16 / 10;
+  position: relative;
+  overflow: hidden;
+}
+.night .img .art { position: absolute; inset: 0; }
+.night .img::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%);
+}
+.night .body { padding: 22px 22px 24px; }
+.night .when {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.night h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.015em;
+  font-size: 22px;
+  line-height: 1.15;
+}
+:root[data-theme="velvet-noir"] .night h3,
+:root[data-theme="dark-rose"] .night h3 { font-style: italic; }
+.night .where {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.night .role {
+  margin-top: 14px;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--hair);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* -----------------------------------------------------------
+   MOODBOARD MARQUEE
+   ----------------------------------------------------------- */
+.moodboard {
+  position: relative;
+  overflow: hidden;
+  margin: 0 -32px;
+  padding: 24px 0;
+  border-block: 1px solid var(--hair);
+}
+.mood-track {
+  display: flex; gap: 18px;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+.mood-track:hover { animation-play-state: paused; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.mood {
+  width: 240px; aspect-ratio: 4 / 5;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--hair);
+  position: relative;
+  overflow: hidden;
+}
+.mood .lab {
+  position: absolute; left: 12px; bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  mix-blend-mode: difference;
+}
+
+/* -----------------------------------------------------------
+   QUOTE
+   ----------------------------------------------------------- */
+.quote {
+  text-align: center;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 48px 0;
+}
+.quote .mark {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 96px;
+  line-height: 0;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 22px;
+  height: 32px;
+}
+.quote blockquote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.015em;
+  font-size: clamp(28px, 3.8vw, 44px);
+  line-height: 1.18;
+}
+:root[data-theme="velvet-noir"] .quote blockquote,
+:root[data-theme="dark-rose"] .quote blockquote { font-style: italic; }
+.quote cite {
+  display: block;
+  margin-top: 22px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-style: normal;
+}
+
+/* -----------------------------------------------------------
+   BOOKING FUNNEL
+   ----------------------------------------------------------- */
+.booking {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: stretch;
+  padding: 56px;
+  background: var(--card-surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--card-radius);
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 920px) { .booking { grid-template-columns: 1fr; gap: 32px; padding: 36px 28px; } }
+
+.booking::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(60% 80% at 90% 0%, var(--ambient-color), transparent 60%);
+  pointer-events: none;
+}
+.booking .left { position: relative; z-index: 1; }
+.booking h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: clamp(34px, 4.4vw, 56px);
+  line-height: 1.04;
+}
+:root[data-theme="velvet-noir"] .booking h2,
+:root[data-theme="dark-rose"] .booking h2 { font-style: italic; }
+.booking .blurb {
+  margin-top: 18px;
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 38ch;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 22px;
+  border-radius: var(--btn-shape);
+  border: 1px solid var(--accent);
+  background: var(--btn-fill);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s ease;
+  isolation: isolate;
+  cursor: pointer;
+}
+.btn::before {
+  content: ""; position: absolute; inset: 0;
+  background: var(--btn-fill-hover);
+  transform: translateY(101%);
+  transition: transform 0.45s cubic-bezier(0.22,0.68,0.26,1);
+  z-index: -1;
+}
+.btn:hover::before { transform: translateY(0); }
+.btn:hover { color: var(--btn-ink-hover); }
+.btn .arrow { transition: transform 0.4s ease; }
+.btn:hover .arrow { transform: translateX(4px); }
+
+.cta-wrap { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+
+.brief-form {
+  display: grid; gap: 12px;
+  position: relative; z-index: 1;
+}
+.brief-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .brief-form .row { grid-template-columns: 1fr; } }
+.brief-form input, .brief-form textarea, .brief-form select {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--hair);
+  padding: 12px 2px;
+  color: var(--ink);
+  font: inherit;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.brief-form input:focus, .brief-form textarea:focus, .brief-form select:focus {
+  border-bottom-color: var(--accent);
+}
+.brief-form input::placeholder, .brief-form textarea::placeholder {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.brief-form textarea { min-height: 76px; resize: vertical; }
+
+/* -----------------------------------------------------------
+   SOCIAL
+   ----------------------------------------------------------- */
+.social {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+@media (max-width: 720px) { .social { grid-template-columns: repeat(2, 1fr); } }
+.soc {
+  padding: 22px;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--hair);
+  background: var(--card-surface);
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.soc:hover { transform: translateY(-3px); border-color: var(--accent); }
+.soc .plat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.soc .han {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--display-weight);
+  font-size: 22px;
+  letter-spacing: -0.015em;
+}
+:root[data-theme="champagne-muse"] .soc .han,
+:root[data-theme="neon-siren"] .soc .han,
+:root[data-theme="ice-queen"] .soc .han,
+:root[data-theme="goth-luxe"] .soc .han,
+:root[data-theme="pop-star"] .soc .han { font-style: normal; }
+.soc .arrow { color: var(--accent); margin-top: auto; align-self: end; }
+
+/* -----------------------------------------------------------
+   FOOTER
+   ----------------------------------------------------------- */
+footer {
+  padding: 48px 0 36px;
+  border-top: 1px solid var(--hair);
+  margin-top: 48px;
+}
+footer .row {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 24px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width: 720px) { footer .row { flex-direction: column; gap: 14px; } }
+footer .links { display: flex; gap: 18px; }
+footer .links a { color: var(--muted); transition: color 0.3s ease; }
+footer .links a:hover { color: var(--accent); }
+footer .mark {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--display-weight);
+  font-size: 16px;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+:root[data-theme="champagne-muse"] footer .mark,
+:root[data-theme="neon-siren"] footer .mark,
+:root[data-theme="ice-queen"] footer .mark,
+:root[data-theme="goth-luxe"] footer .mark,
+:root[data-theme="pop-star"] footer .mark { font-style: normal; }
+
+/* -----------------------------------------------------------
+   FIGURE — abstract editorial silhouette (SVG inlined below)
+   Theme-tinted via fill="currentColor" patterns.
+   ----------------------------------------------------------- */
+.figureColor { color: var(--accent); }
+
+/* Word reveal for the hero name */
+.word { display: inline-block; overflow: hidden; vertical-align: top; }
+.word > span {
+  display: inline-block;
+  transform: translateY(101%);
+  transition: transform 1100ms cubic-bezier(0.22,0.68,0.26,1);
+  transition-delay: var(--wd, 0ms);
+}
+.in .word > span { transform: translateY(0); }
+</style>
+</head>
+
+<body>
+
+<!-- Ambient theme-driven layers -->
+<div class="ambient" aria-hidden="true">
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+  <div class="grid"></div>
+  <div class="shimmer"></div>
+</div>
+
+<!-- Theme switcher -->
+<nav class="deck" aria-label="Theme switcher">
+  <span class="label">Theme</span>
+  <button class="pill" data-set-theme="velvet-noir"   data-motion="slow-luxury"      aria-current="true">Velvet Noir</button>
+  <button class="pill" data-set-theme="champagne-muse" data-motion="floaty-editorial">Champagne</button>
+  <button class="pill" data-set-theme="neon-siren"    data-motion="pulse-glow">Neon Siren</button>
+  <button class="pill" data-set-theme="ice-queen"     data-motion="glass-shimmer">Ice Queen</button>
+  <button class="pill" data-set-theme="dark-rose"     data-motion="petal-fall">Dark Rose</button>
+  <button class="pill" data-set-theme="goth-luxe"     data-motion="slow-luxury">Goth Luxe</button>
+  <button class="pill" data-set-theme="pop-star"      data-motion="bouncy-spring">Pop Star</button>
+</nav>
+
+<main>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" data-module="hero">
+    <div class="shell">
+      <div class="grid">
+        <div>
+          <div class="meta reveal" style="--d: 0ms;">
+            <span class="dot"></span>
+            <span>Calling Card · Profile 001</span>
+          </div>
+
+          <h1 class="name display reveal" style="--d: 80ms;">
+            <span class="word"><span style="--wd: 80ms;">Nova</span></span>
+            <br/>
+            <span class="word"><span style="--wd: 200ms;" class="accent">Vellichor</span></span>
+          </h1>
+
+          <p class="tagline reveal" style="--d: 320ms;">
+            After-hours sound director. Vinyl &amp; velvet — two cities, one frequency.
+          </p>
+
+          <div class="pillrow reveal" style="--d: 460ms;">
+            <span class="pill">Miami × Lisbon</span>
+            <span class="pill">DJ · Editorial muse</span>
+            <span class="pill">Residency · Cipriani</span>
+            <span class="pill">EN · PT · IT</span>
+          </div>
+        </div>
+
+        <div class="hero-card reveal" style="--d: 220ms;">
+          <span class="badge mono">Profile 001</span>
+          <span class="corner">04 / 30 / 26</span>
+          <div class="figure">
+            <!-- Abstract editorial figure: stylized portrait silhouette -->
+            <svg viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="bgg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%"  stop-color="var(--accent-soft)" stop-opacity="0.9"/>
+                  <stop offset="50%" stop-color="var(--bg-2)" stop-opacity="0.6"/>
+                  <stop offset="100%" stop-color="var(--bg)" stop-opacity="1"/>
+                </linearGradient>
+                <radialGradient id="moon" cx="50%" cy="40%" r="55%">
+                  <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.55"/>
+                  <stop offset="55%" stop-color="var(--accent)" stop-opacity="0.12"/>
+                  <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="silg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"  stop-color="var(--bg)" stop-opacity="0.95"/>
+                  <stop offset="100%" stop-color="var(--bg)" stop-opacity="1"/>
+                </linearGradient>
+              </defs>
+
+              <rect width="600" height="800" fill="url(#bgg)"/>
+              <circle cx="300" cy="320" r="280" fill="url(#moon)"/>
+
+              <!-- decorative arcs -->
+              <g stroke="var(--accent)" stroke-opacity="0.18" fill="none" stroke-width="1">
+                <circle cx="300" cy="320" r="200"/>
+                <circle cx="300" cy="320" r="150"/>
+                <circle cx="300" cy="320" r="100"/>
+              </g>
+
+              <!-- stylized silhouette: shoulders + head + flowing hair -->
+              <path d="M 110 800 L 110 720 Q 120 660 180 620 Q 220 595 240 555 L 240 510 Q 215 495 205 460 Q 175 445 175 395 Q 165 385 175 365 Q 175 320 220 290 Q 250 260 290 258 Q 360 250 400 290 Q 440 320 440 380 Q 450 400 435 430 Q 425 470 395 495 Q 395 530 380 555 Q 405 595 460 620 Q 510 645 530 700 L 530 800 Z"
+                    fill="url(#silg)"/>
+
+              <!-- hair flowing -->
+              <path d="M 175 380 Q 110 350 95 280 Q 90 210 165 165 Q 125 150 130 110 Q 200 85 290 95 Q 380 75 450 110 Q 510 145 495 200 Q 540 250 510 320 Q 480 380 440 395 Q 460 340 450 295 Q 410 250 360 250 Q 290 248 230 285 Q 195 320 188 365 Z"
+                    fill="var(--bg)" opacity="0.94"/>
+
+              <!-- cheek highlight -->
+              <ellipse cx="370" cy="370" rx="14" ry="18" fill="var(--accent)" opacity="0.22"/>
+              <!-- subtle earring shine -->
+              <circle cx="395" cy="395" r="3" fill="var(--accent)"/>
+
+              <!-- caption hairline -->
+              <line x1="40" y1="760" x2="120" y2="760" stroke="var(--accent)" stroke-opacity="0.5"/>
+              <text x="40" y="780" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--accent)" letter-spacing="3">EDITORIAL · LISBON</text>
+
+              <!-- corner registration mark -->
+              <g stroke="var(--accent)" stroke-opacity="0.5" stroke-width="1" fill="none">
+                <line x1="540" y1="40" x2="560" y2="40"/>
+                <line x1="560" y1="40" x2="560" y2="60"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-rule"></div>
+
+  <!-- ===================== VIBE ===================== -->
+  <section class="shell" data-module="vibe">
+    <div class="vibe">
+      <div class="reveal" style="--d: 0ms;">
+        <div class="eyebrow">Signature vibe</div>
+        <h2 class="signature display" style="margin-top:18px;">Slow grooves, <br/>slower exits.</h2>
+        <p class="muted" style="margin-top:22px; max-width:42ch; line-height:1.7;">
+          Two cities, one frequency. Sets read like late films — lazy openers, a long second act, an exit you remember. The wardrobe finishes the sentence.
+        </p>
+      </div>
+      <div class="palette reveal" style="--d: 200ms;">
+        <div class="swatch" data-label="OXBLOOD"   style="background: linear-gradient(140deg, #2A0E11, #4F1820 60%, #2A0E11);"></div>
+        <div class="swatch" data-label="CHAMPAGNE" style="background: linear-gradient(140deg, #C7A66B, #E2C58F 60%, #8E7544);"></div>
+        <div class="swatch" data-label="VELLICHOR" style="background: linear-gradient(140deg, #FFF6E3, #C9BBA4 60%, #8E7A65);"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-rule"></div>
+
+  <!-- ===================== STATS ===================== -->
+  <section class="shell" data-module="stats">
+    <div class="section-head">
+      <h2 class="title">By the numbers.</h2>
+      <span class="eyebrow">Updated quarterly</span>
+    </div>
+    <div class="stats">
+      <div class="stat reveal" style="--d:0ms;">
+        <span class="ix">01</span>
+        <span class="num" data-count="184">0</span>
+        <div class="lbl">Sets played</div>
+      </div>
+      <div class="stat reveal" style="--d:80ms;">
+        <span class="ix">02</span>
+        <span class="num" data-count="27">0</span>
+        <div class="lbl">Cities</div>
+      </div>
+      <div class="stat reveal" style="--d:160ms;">
+        <span class="ix">03</span>
+        <span class="num" data-count="6">0</span>
+        <div class="lbl">Cover features</div>
+      </div>
+      <div class="stat reveal" style="--d:240ms;">
+        <span class="ix">04</span>
+        <span class="num" data-count="9">0</span>
+        <div class="lbl">Years on the deck</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-rule"></div>
+
+  <!-- ===================== GALLERY ===================== -->
+  <section class="shell" data-module="gallery">
+    <div class="section-head">
+      <h2 class="title">Gallery moments.</h2>
+      <span class="eyebrow">06 selects</span>
+    </div>
+    <div class="gallery">
+      <div class="gtile t1 reveal" style="--d:0ms;">
+        <div class="art" style="background: linear-gradient(160deg, #2A0E11 0%, #5A2A2F 50%, #C7A66B 100%);">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+            <radialGradient id="g1" cx="60%" cy="40%" r="50%">
+              <stop offset="0%" stop-color="#FFF6E3" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#FFF6E3" stop-opacity="0"/>
+            </radialGradient>
+            <rect width="400" height="500" fill="url(#g1)"/>
+            <ellipse cx="240" cy="200" rx="50" ry="65" fill="#1A0606" opacity="0.5"/>
+            <path d="M 180 280 Q 220 240 280 270 L 290 500 L 170 500 Z" fill="#1A0606" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="vignette"></div>
+        <div class="cap">Editorial — Lisbon, 03:14</div>
+      </div>
+
+      <div class="gtile t2 reveal" style="--d:100ms;">
+        <div class="art" style="background:
+          radial-gradient(80% 60% at 30% 80%, rgba(199,166,107,0.4), transparent 60%),
+          linear-gradient(120deg, #0E0507 0%, #2A1217 80%);">
+          <svg viewBox="0 0 700 480" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+            <!-- DJ deck silhouette -->
+            <rect x="120" y="280" width="460" height="14" fill="#1A0606"/>
+            <circle cx="240" cy="270" r="55" fill="none" stroke="#C7A66B" stroke-width="1.5" opacity="0.7"/>
+            <circle cx="240" cy="270" r="40" fill="#1A0606" stroke="#C7A66B" stroke-width="1" opacity="0.5"/>
+            <circle cx="240" cy="270" r="6"  fill="#C7A66B"/>
+            <circle cx="460" cy="270" r="55" fill="none" stroke="#C7A66B" stroke-width="1.5" opacity="0.7"/>
+            <circle cx="460" cy="270" r="40" fill="#1A0606" stroke="#C7A66B" stroke-width="1" opacity="0.5"/>
+            <circle cx="460" cy="270" r="6"  fill="#C7A66B"/>
+            <rect x="320" y="245" width="60" height="50" fill="#1A0606" stroke="#C7A66B" stroke-width="1" opacity="0.5"/>
+            <!-- light rays -->
+            <path d="M 0 0 L 350 220 L 0 440 Z" fill="#C7A66B" opacity="0.04"/>
+            <path d="M 700 0 L 350 220 L 700 440 Z" fill="#C7A66B" opacity="0.04"/>
+          </svg>
+        </div>
+        <div class="vignette"></div>
+        <div class="cap">Cipriani Rooftop — set II</div>
+      </div>
+
+      <div class="gtile t3 reveal" style="--d:160ms;">
+        <div class="art" style="background: linear-gradient(135deg, #1F0810 0%, #5A2A2F 100%);">
+          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+            <!-- velvet drape -->
+            <path d="M0 0 L300 0 L300 80 Q260 110 230 80 Q200 60 170 90 Q140 120 110 90 Q80 70 50 100 Q25 120 0 90 Z" fill="#2A0E11"/>
+            <path d="M0 0 L300 0 L300 60 Q270 80 240 60 Q210 50 180 70 Q150 90 120 65 Q90 50 60 75 Q30 90 0 70 Z" fill="#3E1518" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="vignette"></div>
+        <div class="cap">Houses &amp; Hours — runway dinner</div>
+      </div>
+
+      <div class="gtile t4 reveal" style="--d:220ms;">
+        <div class="art" style="background:
+          radial-gradient(circle at 50% 50%, #C7A66B 0%, #5A2A2F 60%, #0B0608 100%);">
+          <svg viewBox="0 0 300 300" style="width:100%;height:100%;">
+            <circle cx="150" cy="150" r="100" fill="none" stroke="#0B0608" stroke-width="40" opacity="0.4"/>
+            <circle cx="150" cy="150" r="65"  fill="#0B0608"/>
+            <circle cx="150" cy="150" r="6"   fill="#C7A66B"/>
+            <text x="150" y="290" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="3" fill="#C7A66B">SIDE A · 33⅓</text>
+          </svg>
+        </div>
+        <div class="vignette"></div>
+        <div class="cap">Crate, candle, 04:02</div>
+      </div>
+
+      <div class="gtile t5 reveal" style="--d:280ms;">
+        <div class="art" style="background: linear-gradient(45deg, #1A0606 0%, #2A0E11 50%, #C7A66B 100%);">
+          <svg viewBox="0 0 300 300" style="width:100%;height:100%;">
+            <text x="20" y="80" font-family="Fraunces, serif" font-style="italic" font-size="48" fill="#FFF6E3" opacity="0.92">WAX</text>
+            <text x="20" y="130" font-family="Fraunces, serif" font-style="italic" font-size="48" fill="#FFF6E3" opacity="0.92">Magazine</text>
+            <line x1="20" y1="155" x2="280" y2="155" stroke="#C7A66B" opacity="0.4"/>
+            <text x="20" y="180" font-family="JetBrains Mono, monospace" font-size="10" fill="#C7A66B" letter-spacing="3">ISSUE 11 · COVER</text>
+            <text x="20" y="270" font-family="JetBrains Mono, monospace" font-size="9" fill="#FFF6E3" opacity="0.6" letter-spacing="2">NOVA VELLICHOR</text>
+          </svg>
+        </div>
+        <div class="vignette"></div>
+        <div class="cap">Cover proof — WAX Magazine</div>
+      </div>
+
+      <div class="gtile t6 reveal" style="--d:340ms;">
+        <div class="art" style="background:
+          linear-gradient(90deg, rgba(11,6,8,0.95) 0%, transparent 30%, transparent 70%, rgba(11,6,8,0.95) 100%),
+          linear-gradient(135deg, #2A0E11 0%, #C7A66B 50%, #2A0E11 100%);">
+          <svg viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+            <g stroke="#C7A66B" stroke-width="1" opacity="0.25" fill="none">
+              <line x1="0" y1="100" x2="1200" y2="100"/>
+              <line x1="0" y1="200" x2="1200" y2="200"/>
+              <line x1="0" y1="300" x2="1200" y2="300"/>
+              <line x1="0" y1="400" x2="1200" y2="400"/>
+            </g>
+            <!-- runway figures -->
+            <g fill="#0B0608" opacity="0.85">
+              <ellipse cx="200" cy="180" rx="22" ry="26"/>
+              <path d="M 178 210 Q 200 230 222 210 L 232 480 L 168 480 Z"/>
+              <ellipse cx="600" cy="160" rx="20" ry="24"/>
+              <path d="M 580 188 Q 600 208 620 188 L 628 480 L 572 480 Z"/>
+              <ellipse cx="1000" cy="170" rx="20" ry="24"/>
+              <path d="M 980 198 Q 1000 218 1020 198 L 1028 480 L 972 480 Z"/>
+            </g>
+          </svg>
+        </div>
+        <div class="vignette"></div>
+        <div class="cap">Backstage — Milan, FW</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-rule"></div>
+
+  <!-- ===================== FEATURED NIGHTS ===================== -->
+  <section class="shell" data-module="nights">
+    <div class="section-head">
+      <h2 class="title">Featured nights.</h2>
+      <span class="eyebrow">Recent residencies</span>
+    </div>
+    <div class="nights">
+      <article class="night reveal" style="--d:0ms;">
+        <div class="img">
+          <div class="art" style="background:
+            radial-gradient(60% 80% at 30% 80%, rgba(199,166,107,0.5), transparent 60%),
+            linear-gradient(135deg, #0B0608 0%, #2A0E11 50%, #5A2A2F 100%);"></div>
+        </div>
+        <div class="body">
+          <div class="when">22 · 03 · 2026 · Miami</div>
+          <h3>Velvet Sessions vol. 04</h3>
+          <p class="where">Hotel Cipriani — Rooftop Room</p>
+          <span class="role">Headline DJ</span>
+        </div>
+      </article>
+
+      <article class="night reveal" style="--d:120ms;">
+        <div class="img">
+          <div class="art" style="background:
+            linear-gradient(160deg, #160A0D 0%, #3E1A23 60%, #C7A66B 100%);"></div>
+        </div>
+        <div class="body">
+          <div class="when">09 · 02 · 2026 · Lisbon</div>
+          <h3>Houses &amp; Hours — runway dinner</h3>
+          <p class="where">Atelier Cordeiro</p>
+          <span class="role">Sound direction</span>
+        </div>
+      </article>
+
+      <article class="night reveal" style="--d:240ms;">
+        <div class="img">
+          <div class="art" style="background:
+            radial-gradient(80% 60% at 50% 30%, rgba(199,166,107,0.55), transparent 60%),
+            linear-gradient(180deg, #0B0608 0%, #160A0D 100%);"></div>
+        </div>
+        <div class="body">
+          <div class="when">18 · 01 · 2026 · Lisbon</div>
+          <h3>WAX Magazine — issue 11 launch</h3>
+          <p class="where">Casa Mar</p>
+          <span class="role">Cover talent + closing set</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="section-rule"></div>
+
+  <!-- ===================== MOODBOARD ===================== -->
+  <section class="shell" data-module="moodboard">
+    <div class="section-head">
+      <h2 class="title">Moodboard.</h2>
+      <span class="eyebrow">Auto-running · hover to pause</span>
+    </div>
+  </section>
+  <div class="moodboard reveal" style="--d:0ms;">
+    <div class="mood-track" id="mood-track">
+      <!-- 7 swatches × 2 (so the loop is seamless) -->
+      <div class="mood" style="background: linear-gradient(135deg,#2A0E11,#5A2A2F);"><span class="lab">VELVET</span></div>
+      <div class="mood" style="background: linear-gradient(135deg,#160A0D,#C7A66B);"><span class="lab">CHAMPAGNE</span></div>
+      <div class="mood" style="background: linear-gradient(135deg,#0B0608,#3E1A23 60%, #C7A66B);"><span class="lab">CRATE 04:02</span></div>
+      <div class="mood" style="background: radial-gradient(circle at 30% 30%, #FFF6E3 0%, #C7A66B 40%, #2A0E11 100%);"><span class="lab">SPOT, OFF</span></div>
+      <div class="mood" style="background: linear-gradient(135deg,#0B0608 30%, #5A2A2F);"><span class="lab">3AM HOUR</span></div>
+      <div class="mood" style="background: linear-gradient(45deg,#1A0606,#C7A66B);"><span class="lab">VINYL EDIT</span></div>
+      <div class="mood" style="background: linear-gradient(135deg,#160A0D,#C7A66B 50%, #2A0E11);"><span class="lab">DRAPE</span></div>
+      <!-- duplicate -->
+      <div class="mood" style="background: linear-gradient(135deg,#2A0E11,#5A2A2F);"><span class="lab">VELVET</span></div>
+      <div class="mood" style="background: linear-gradient(135deg,#160A0D,#C7A66B);"><span class="lab">CHAMPAGNE</span></div>
+      <div class="mood" style="background: linear-gradient(135deg,#0B0608,#3E1A23 60%, #C7A66B);"><span class="lab">CRATE 04:02</span></div>
+      <div class="mood" style="background: radial-gradient(circle at 30% 30%, #FFF6E3 0%, #C7A66B 40%, #2A0E11 100%);"><span class="lab">SPOT, OFF</span></div>
+      <div class="mood" style="background: linear-gradient(135deg,#0B0608 30%, #5A2A2F);"><span class="lab">3AM HOUR</span></div>
+      <div class="mood" style="background: linear-gradient(45deg,#1A0606,#C7A66B);"><span class="lab">VINYL EDIT</span></div>
+      <div class="mood" style="background: linear-gradient(135deg,#160A0D,#C7A66B 50%, #2A0E11);"><span class="lab">DRAPE</span></div>
+    </div>
+  </div>
+
+  <div class="section-rule"></div>
+
+  <!-- ===================== QUOTE ===================== -->
+  <section class="shell" data-module="quote">
+    <div class="quote reveal" style="--d:0ms;">
+      <span class="mark">&ldquo;</span>
+      <blockquote>She turns a room into an afterglow.</blockquote>
+      <cite>— WAX Magazine, Issue 11</cite>
+    </div>
+  </section>
+
+  <div class="section-rule"></div>
+
+  <!-- ===================== BOOKING ===================== -->
+  <section class="shell" data-module="booking">
+    <div class="booking reveal" style="--d:0ms;">
+      <div class="left">
+        <div class="eyebrow">Booking</div>
+        <h2 style="margin-top:14px;">Reserve the hour.</h2>
+        <p class="blurb">DJ sets, brand appearances, runway sound direction, editorial collaboration. Briefs reviewed weekly.</p>
+        <div class="cta-wrap">
+          <a class="btn" href="mailto:bookings@example.com">
+            <span>Send a brief</span>
+            <span class="arrow">→</span>
+          </a>
+          <a class="btn" href="#" style="border-color: var(--hair);">
+            <span>Press kit</span>
+          </a>
+        </div>
+      </div>
+
+      <form class="brief-form" onsubmit="event.preventDefault(); alert('In production this submits to your inbox.');">
+        <div class="row">
+          <input type="text" placeholder="Your name" />
+          <input type="text" placeholder="Company / publication" />
+        </div>
+        <div class="row">
+          <input type="text" placeholder="Date / window" />
+          <input type="text" placeholder="City" />
+        </div>
+        <select>
+          <option>Scope — DJ set</option>
+          <option>Scope — Runway sound direction</option>
+          <option>Scope — Editorial appearance</option>
+          <option>Scope — Brand collaboration</option>
+        </select>
+        <textarea placeholder="Notes — venue, audience, references"></textarea>
+        <button class="btn" type="submit" style="justify-content:center;">
+          <span>Submit brief</span>
+          <span class="arrow">→</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <div class="section-rule"></div>
+
+  <!-- ===================== SOCIAL ===================== -->
+  <section class="shell" data-module="social">
+    <div class="section-head">
+      <h2 class="title">Elsewhere.</h2>
+      <span class="eyebrow">DM open · brief preferred</span>
+    </div>
+    <div class="social">
+      <a class="soc reveal" style="--d:0ms;"   href="#">
+        <span class="plat">Instagram</span>
+        <span class="han">@novavellichor</span>
+        <span class="arrow">→</span>
+      </a>
+      <a class="soc reveal" style="--d:80ms;"  href="#">
+        <span class="plat">Soundcloud</span>
+        <span class="han">/novavellichor</span>
+        <span class="arrow">→</span>
+      </a>
+      <a class="soc reveal" style="--d:160ms;" href="#">
+        <span class="plat">TikTok</span>
+        <span class="han">@nova.vellichor</span>
+        <span class="arrow">→</span>
+      </a>
+      <a class="soc reveal" style="--d:240ms;" href="#">
+        <span class="plat">Site</span>
+        <span class="han">novavellichor.example</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="shell" data-module="footer">
+    <div class="row">
+      <span class="mark">Calling Card</span>
+      <span>© 2026 · All rights reserved</span>
+      <span class="links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Press kit</a>
+      </span>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+/* =====================================================
+   THEME SWITCHING
+   ===================================================== */
+const root = document.documentElement;
+const pills = document.querySelectorAll('.deck .pill');
+pills.forEach(p => {
+  p.addEventListener('click', () => {
+    const t = p.dataset.setTheme;
+    const m = p.dataset.motion;
+    root.dataset.theme = t;
+    root.dataset.motion = m;
+    pills.forEach(o => o.setAttribute('aria-current', o === p ? 'true' : 'false'));
+    // Tiny re-trigger on the heroes so reveals replay (optional UX nicety):
+    document.querySelectorAll('.reveal').forEach(el => {
+      // No-op: leave them in place. Theme just re-skins.
+    });
+  });
+});
+
+/* =====================================================
+   REVEAL ON SCROLL
+   ===================================================== */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      // Stat counters
+      if (entry.target.classList.contains('stat')) {
+        const num = entry.target.querySelector('.num[data-count]');
+        if (num && !num.dataset.done) {
+          num.dataset.done = '1';
+          animateCount(num, parseInt(num.dataset.count, 10));
+        }
+      }
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* =====================================================
+   COUNT-UP
+   ===================================================== */
+function animateCount(node, target) {
+  const start = performance.now();
+  const dur = 1400;
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  function step(now) {
+    const p = Math.min(1, (now - start) / dur);
+    const v = Math.round(ease(p) * target);
+    node.textContent = v.toLocaleString();
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/* =====================================================
+   HERO WORD REVEAL — kick off after first paint
+   ===================================================== */
+window.addEventListener('load', () => {
+  document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('in'));
+});
+</script>
+
+</body>
+</html>
